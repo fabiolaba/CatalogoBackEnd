@@ -37,7 +37,7 @@ export class UsuarioController {
 
     public obtenerUsuarios = (req: Request, res: Response) => {
         Usuario.find({})
-        .select('apellidoPaterno apellidoMaternonombre')
+        .select('apellidoPaterno apellidoMaterno nombre')
         .exec()
         .then(usuarios => {
             res.status(200).json({

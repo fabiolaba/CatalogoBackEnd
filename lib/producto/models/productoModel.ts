@@ -57,3 +57,6 @@ let ProductoSchema = new SCHEMA({
         }
     ]
 })
+
+const Producto = mongoose.model<IProducto>("Producto", ProductoSchema);
+export default Producto;
