@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Usuario from '../models/usuarioModels';
 import * as bcrypt from 'bcryptjs';
+import { Routes } from '../../routes';
 
 export class UsuarioController {
     public crearUsuario = (req: Request, res: Response) => {
@@ -10,7 +11,7 @@ export class UsuarioController {
                 apellidoMaterno: req.body.apellidoMaterno,
                 nombre: req.body.nombre,
                 login: req.body.login,
-                password: bcrypt.hashSync(req.body.password, 10) 
+                password: bcrypt.hashSync(req.body.password,10)
             }
         );
         usuario.save((err, usuarioCreado) => {
@@ -24,21 +25,22 @@ export class UsuarioController {
                     }
                 );
             }
-            res.status(201).json({
-                ok: true,
-                message: 'Usuario creado',
-                usuario: usuarioCreado
-            });
-        }
-    )};
+            res.status(201).json(
+                {
+                    ok: true,
+                    message: 'Usuario creado',
+                    usuario: usuarioCreado
+                }
+            )
+        });
+    }
 
     public obtenerUsuarios = (req: Request, res: Response) => {
-        Usuario.find()
-        .select('apellidoPaterno apellidoMaterno nombre')
+        Usuario.find({})
+        .select('apellidoPaterno apellidoMaternonombre')
         .exec()
         .then(usuarios => {
-            res.status(200).json(
-                {
+            res.status(200).json({
                 ok: true,
                 usuarios
                 }
@@ -91,4 +93,38 @@ export class UsuarioController {
                 );
         });
     }
+    public actualizarUsuario = (req: Request, res: Response) => {
+        Usuario.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true}, (err, usuarioActualizado) =>{
+            if(err) {
+                return res.status(400).json({
+                    ok: false,
+                    message: 'usuario no actualizado',
+                    error: err
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                usuarioActualizado,
+                message: 'usuario actualizado'
+            });
+        });
+    }
+
+    public eliminarUsuario = (req: Request, res: Response) => {
+        Usuario.findByIDAndRemove(req.params.id)
+        .then(eliminado => {
+            res.status(200).json({
+                ok: true,
+                message: 'usuario eliminado'
+            });
+        })
+        .catch( err => {
+            return res.status(400).json({
+                ok: false,
+                message: 'Usuario no eliminado',
+                error: err
+            });
+        })
+    }
+
 } 
