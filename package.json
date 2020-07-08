@@ -1,0 +1,19 @@
+{
+  "name": "catalogobackend",
+  "version": "1.0.0",
+  "description": "BackEnd del proyecto",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabiolaba/CatalogoBackEnd.git"
+  },
+  "author": "Fabiola barrios aguilar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabiolaba/CatalogoBackEnd/issues"
+  },
+  "homepage": "https://github.com/fabiolaba/CatalogoBackEnd#readme"
+}
